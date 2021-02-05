@@ -4,10 +4,40 @@
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+
 // const fs = require("os");
 // const fs = require("url");
 
-const server = http.createServer((req, res) => {
+// plain node js server
+/*const server = http.createServer((req, res) => {
+
+});*/
+
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+const posts = [
+  {
+    username: 'user1',
+    title: 'Post 1'
+  },
+  {
+    username: 'user2',
+    title: 'Post 2'
+  }
+]
+
+app.get('/*', authenticateToken, (req, res) => {
+
+
+  const msg = posts.filter(post => post.username === req.user.name)
+
+  fs.writeFile(path.join(__dirname, "/src", "response.json"), JSON.stringify(msg), err => {
+      if (err) throw err;
+  });
+
   // Build file path
   let filePath = path.join(
     __dirname,
@@ -63,7 +93,21 @@ const server = http.createServer((req, res) => {
     }
   });
 
-});
+})
+
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403)
+    req.user = user
+    next()
+  })
+}
+
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

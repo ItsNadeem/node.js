@@ -2,13 +2,18 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "nodejs refresher",
-  "main": "server,js",
+  "main": "resource-server,js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node resource-server.js",
+    "dev": "node resource-server.js",
+    "auth": "node auth-server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "uuid": "^8.3.2"
   }
 }
