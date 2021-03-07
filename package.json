@@ -2,11 +2,9 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "nodejs refresher",
-  "main": "resource-server,js",
+  "main": "server,js",
   "scripts": {
-    "start": "node resource-server.js",
-    "dev": "node resource-server.js",
-    "auth": "node auth-server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
